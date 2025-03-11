@@ -32,9 +32,11 @@ class TodoController extends GetxController {
   void toggletodo(int index) {
     todoList[index].isDone = !todoList[index].isDone;
     todoList.refresh();
+    storageService.write('todoList', todoList.toJson());
   }
 
   void deleteTodo(int index) {
     todoList.removeAt(index);
+    storageService.write('todoList', todoList.toJson());
   }
 }
