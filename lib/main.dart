@@ -13,6 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(title: 'Flutter GetX', home: HomeView());
+    return GetMaterialApp(title: 'Flutter GetX', home: HomeView()); //Home
   }
 }
