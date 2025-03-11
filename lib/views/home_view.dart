@@ -29,53 +29,52 @@ class HomeView extends StatelessWidget {
                       vertical: 8,
                       horizontal: 16,
                     ),
-                    child: Card(
-                      elevation: 4, // ให้เงาสำหรับการตกแต่ง
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // มุมโค้งมน
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
                       ),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.grey.shade300,
-                          ), // ขอบกรอบ
-                          color: Colors.white, // พื้นหลังสีขาว
-                        ),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(
-                            todo.title,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              todo.title,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            subtitle: Text(
+                              todo.subtitle,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                            leading: Checkbox(
+                              value: todo.isDone,
+                              onChanged: (bool? newValue) {
+                                todoController.toggletodo(index);
+                              },
+                            ),
+                            trailing: IconButton(
+                              onPressed: () {
+                                todoController.deleteTodo(index);
+                              },
+                              icon: Icon(Icons.delete, color: Colors.red),
                             ),
                           ),
-                          subtitle: Text(
-                            todo.subtitle,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey.shade600,
-                            ),
+                          Divider(
+                            // เพิ่มขีดเส้นที่นี่
+                            color: Colors.grey,
+                            thickness: 1.5,
                           ),
-                          leading: Checkbox(
-                            value: todo.isDone,
-                            onChanged: (bool? newValue) {
-                              todoController.toggletodo(index);
-                            },
-                          ),
-                          trailing: IconButton(
-                            onPressed: () {
-                              todoController.deleteTodo(index);
-                            },
-                            icon: Icon(Icons.delete, color: Colors.red),
-                          ),
-                        ),
+                        ],
                       ),
                     ),
                   );
