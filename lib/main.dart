@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:todo_getx/services/storage_service.dart';
 import 'package:todo_getx/views/home_view.dart';
 
-void main() {
+Future<void> main() async {
+  await StorageService().init();
   runApp(const MyApp());
 }
 
