@@ -9,7 +9,19 @@ class TodoController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    todoList.value = storageService.read('todoList');
+    fetchTodoList();
+    // todoList.value = List<TodoModel>.from(
+    //   storageService.read('todoList') ?? [],
+    // );
+  }
+
+  void fetchTodoList() {
+    var todos = storageService.read('todoList');
+    if (todos != null) {
+      todoList.value = List<TodoModel>.from(
+        todos.map((x) => TodoModel.fromJson(x)),
+      );
+    }
   }
 
   void addTodo(String title, String subtitle) {

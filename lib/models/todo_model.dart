@@ -9,4 +9,8 @@ class TodoModel {
     'subtitle': subtitle,
     'isDone': isDone,
   };
+  TodoModel.fromJson(Map<String, dynamic> json)
+    : title = json['title'],
+      subtitle = json['subtitle'],
+      isDone = json['isDone'];
 }

@@ -100,6 +100,22 @@ class AddTodoView extends StatelessWidget {
                             );
                             return; // หยุดการทำงานหากกรอกข้อมูลไม่ครบ
                           }
+                          // bool isDuplicate = todoController.todoList.any(
+                          //   (todo) => todo.title == titleController.text,
+                          // );
+
+                          // if (isDuplicate) {
+                          //   // ถ้าซ้ำ แสดง Snackbar แจ้งเตือน
+                          //   Get.snackbar(
+                          //     'แจ้งเตือน',
+                          //     'รายการนี้มีอยู่แล้ว',
+                          //     backgroundColor: Colors.red.withOpacity(
+                          //       0.3,
+                          //     ), // สีพื้นหลังของ Snackbar
+                          //     colorText: Colors.black,
+                          //   );
+                          //   return;
+                          // }
 
                           // ถ้ามีการกรอกข้อมูลครบถ้วนแล้ว ทำการเพิ่ม Todo
                           todoController.addTodo(
