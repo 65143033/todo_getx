@@ -114,7 +114,7 @@ class AddTodoView extends StatelessWidget {
                           Get.snackbar(
                             'แจ้งเตือน',
                             'บันทึกรายการสำเร็จ',
-                            backgroundColor: Colors.pink.withOpacity(
+                            backgroundColor: Colors.green.withOpacity(
                               0.3,
                             ), // สีพื้นหลังของ Snackbar
                             colorText: Colors.black, // สีของข้อความใน Snackbar

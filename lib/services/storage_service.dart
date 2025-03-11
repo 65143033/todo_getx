@@ -10,7 +10,7 @@ class StorageService {
     await box.write(key, value);
   }
 
-  Future<dynamic> read(String key) async {
-    return await box.read(key);
+  dynamic read(String key) {
+    return box.read(key);
   }
 }

@@ -6,9 +6,15 @@ class TodoController extends GetxController {
   var todoList = <TodoModel>[].obs;
   StorageService storageService = StorageService();
 
+  @override
+  void onInit() {
+    super.onInit();
+    todoList.value = storageService.read('todoList');
+  }
+
   void addTodo(String title, String subtitle) {
     todoList.add(TodoModel(title, subtitle, false));
-    storageService.write('todoList', todoList);
+    storageService.write('todoList', todoList.toJson());
   }
 
   void toggletodo(int index) {
