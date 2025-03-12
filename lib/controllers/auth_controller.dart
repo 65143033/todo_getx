@@ -15,4 +15,16 @@ class AuthController extends GetxController {
       Get.snackbar("สมัครสมาชิกก", e.toString());
     }
   }
+
+  Future<void> login(String email, String password) async {
+    try {
+      await firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      Get.snackbar("เข้าสู่ระบบ", "เข้าสู่ระบบเสร็จสิ้น");
+    } catch (e) {
+      Get.snackbar("เข้าสู่ระบบ", e.toString());
+    }
+  }
 }

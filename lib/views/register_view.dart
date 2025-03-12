@@ -17,7 +17,6 @@ class RegisterView extends StatelessWidget {
         title: Text("สมัครสมาชิก"),
         backgroundColor: Color.fromARGB(255, 163, 225, 250),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0), // เพิ่ม Padding รอบๆ Body
         child: Column(
