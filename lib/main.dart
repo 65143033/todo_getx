@@ -20,6 +20,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(title: 'Flutter GetX', home: HomeView()); //Home
+    return GetMaterialApp(
+      title: 'Flutter GetX',
+      home: LoginView(),
+      debugShowCheckedModeBanner: false,
+    ); //Home
   }
 }
