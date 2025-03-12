@@ -71,7 +71,7 @@ class AddTodoView extends StatelessWidget {
                             255,
                             217,
                             252,
-                          ), // ตั้งค่าสีพื้นหลังแบบสุ่ม
+                          ),
                           padding: EdgeInsets.symmetric(
                             vertical: 20,
                             horizontal: 40,
