@@ -5,7 +5,7 @@ class AppTextFeild extends StatelessWidget {
   final String label;
   final TextEditingController controller;
 
-  AppTextFeild({super.key, required this.label, required this.controller});
+  const AppTextFeild({super.key, required this.label, required this.controller});
 
   @override
   Widget build(BuildContext context) {
