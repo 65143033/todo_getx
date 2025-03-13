@@ -49,4 +49,8 @@ class TodoController extends GetxController {
     todoList.removeAt(index);
     storageService.write('todoList', todoList.toJson());
   }
+
+  void clearTodo() {
+    todoList.clear();
+  }
 }

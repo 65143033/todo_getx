@@ -42,6 +42,7 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
+              todoController.clearTodo();
               authController.logout();
             },
           ),
