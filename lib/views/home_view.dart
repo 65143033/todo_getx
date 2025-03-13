@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:todo_getx/controllers/todo_controller.dart';
 import 'package:todo_getx/models/todo_model.dart';
 import 'package:todo_getx/views/add_todo_view.dart';
+import '../controllers/auth_controller.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
 
   TodoController todoController = Get.put(TodoController());
+  AuthController authController = Get.put(AuthController());
 
   // ฟังก์ชันแสดงสถานะว่ายังไม่มีรายการ
   Widget _buildEmptyState() {
@@ -36,6 +38,14 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home View'),
         backgroundColor: const Color.fromARGB(255, 163, 225, 250),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              authController.logout();
+            },
+          ),
+        ],
       ),
       body: Obx(() {
         // ตรวจสอบว่ามีข้อมูลหรือไม่ใน todoList
