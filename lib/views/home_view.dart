@@ -5,11 +5,22 @@ import 'package:todo_getx/models/todo_model.dart';
 import 'package:todo_getx/views/add_todo_view.dart';
 import '../controllers/auth_controller.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   TodoController todoController = Get.put(TodoController());
   AuthController authController = Get.put(AuthController());
+
+  void initState() {
+    super.initState();
+    todoController
+        .onInit(); // Ensure onInit is called every time HomeView is used
+  }
 
   // ฟังก์ชันแสดงสถานะว่ายังไม่มีรายการ
   Widget _buildEmptyState() {
