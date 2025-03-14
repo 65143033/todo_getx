@@ -19,7 +19,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     todoController
-        .onInit(); // Ensure onInit is called every time HomeView is used
+        .fetchTodoList(); // Ensure onInit is called every time HomeView is used
   }
 
   // ฟังก์ชันแสดงสถานะว่ายังไม่มีรายการ
@@ -102,6 +102,11 @@ class _HomeViewState extends State<HomeView> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
+                                decoration:
+                                    todo.isDone
+                                        ? TextDecoration
+                                            .lineThrough // ขีดฆ่าหากทำเครื่องหมายเช็ค
+                                        : TextDecoration.none, // ไม่มีการขีดฆ่า
                               ),
                             ),
                             subtitle: Text(
@@ -123,6 +128,9 @@ class _HomeViewState extends State<HomeView> {
                               },
                               icon: Icon(Icons.delete, color: Colors.red),
                             ),
+                            onTap: () {
+                              Get.to(AddTodoView(todo: todo));
+                            },
                           ),
                         ),
                       ),

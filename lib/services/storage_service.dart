@@ -3,14 +3,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class StorageService {
   final firestore = FirebaseFirestore.instance;
 
-  Future<void> write(String key, dynamic value) async {
+  Future<String> write(String key, dynamic value) async {
     var doc = await firestore.collection(key).add(value);
     await doc.update({'docId': doc.id});
+    return doc.id;
   }
 
   dynamic read(String key, String uid) async {
     var snapshot =
         await firestore.collection(key).where('uid', isEqualTo: uid).get();
     return snapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<void> delete(String key, String DocId) async {
+    await firestore.collection(key).doc(DocId).delete();
+  }
+
+  Future<void> update(
+    String key,
+    String docId,
+    Map<String, dynamic> updates,
+  ) async {
+    await firestore.collection(key).doc(docId).update(updates);
   }
 }

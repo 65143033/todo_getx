@@ -7,10 +7,13 @@ class TodoController extends GetxController {
   var todoList = <TodoModel>[].obs;
   StorageService storageService = StorageService();
   AuthController authController = Get.put(AuthController());
+
   @override
+
   void onInit() {
     super.onInit();
     fetchTodoList();
+
     // todoList.value = List<TodoModel>.from(
     //   storageService.read('todoList') ?? [],
     // );
@@ -28,26 +31,37 @@ class TodoController extends GetxController {
     }
   }
 
-  void addTodo(String title, String subtitle) {
+  Future<void> addTodo(String title, String subtitle) async {
     TodoModel todo = TodoModel(
       title,
       subtitle,
       false,
       uid: authController.user.value?.uid,
     );
+
+    String docId = await storageService.write('todoList', todo.toJson());
+    todo.docId = docId;
     todoList.add(todo);
-    storageService.write('todoList', todo.toJson());
+  }
+
+  Future<void> updateTodo(TodoModel todo) async {
+    todoList.firstWhere((todo) => todo.docId == todo.docId).title;
+    todoList.firstWhere((todo) => todo.docId == todo.docId).subtitle;
+    todoList.refresh();
+    await storageService.update('todoList', todo.docId ?? '', todo.toJson());
   }
 
   void toggletodo(int index) {
     todoList[index].isDone = !todoList[index].isDone;
     todoList.refresh();
-    storageService.write('todoList', todoList.toJson());
+    storageService.update('todoList', todoList[index].docId ?? '', {
+      'isDone': todoList[index].isDone,
+    });
   }
 
-  void deleteTodo(int index) {
-    todoList.removeAt(index);
-    storageService.write('todoList', todoList.toJson());
+  void deleteTodo(index) {
+    var id = todoList.removeAt(index).docId.toString();
+    storageService.delete('todoList', id);
   }
 
   void clearTodo() {

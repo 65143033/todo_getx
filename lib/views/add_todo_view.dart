@@ -1,19 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_getx/controllers/todo_controller.dart';
+import 'package:todo_getx/models/todo_model.dart';
 
-class AddTodoView extends StatelessWidget {
-  AddTodoView({super.key});
+class AddTodoView extends StatefulWidget {
+  AddTodoView({super.key, this.todo});
+  TodoModel? todo;
 
+  @override
+  State<AddTodoView> createState() => _AddTodoViewState();
+}
+
+class _AddTodoViewState extends State<AddTodoView> {
   TodoController todoController = Get.put(TodoController());
   TextEditingController titleController = TextEditingController();
   TextEditingController subtitleController = TextEditingController();
+  bool isLoading = false; // สถานะการโหลด
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.todo != null) {
+      titleController.text = widget.todo!.title;
+      subtitleController.text = widget.todo!.subtitle;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Todo View'),
+        title: Text(widget.todo == null ? 'เพิ่มรายการ' : 'แก้ไขรายการ'),
         backgroundColor: const Color.fromARGB(255, 163, 225, 250),
       ),
       body: Container(
@@ -83,7 +100,7 @@ class AddTodoView extends StatelessWidget {
                             fontSize: 20,
                           ), // ขนาดตัวอักษรใหญ่ขึ้น
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           // ตรวจสอบว่ามีการกรอกข้อมูลในช่องชื่อรายการ
                           if (titleController.text.isEmpty ||
                               subtitleController.text.isEmpty) {
@@ -99,28 +116,26 @@ class AddTodoView extends StatelessWidget {
                             );
                             return; // หยุดการทำงานหากกรอกข้อมูลไม่ครบ
                           }
-                          // bool isDuplicate = todoController.todoList.any(
-                          //   (todo) => todo.title == titleController.text,
-                          // );
 
-                          // if (isDuplicate) {
-                          //   // ถ้าซ้ำ แสดง Snackbar แจ้งเตือน
-                          //   Get.snackbar(
-                          //     'แจ้งเตือน',
-                          //     'รายการนี้มีอยู่แล้ว',
-                          //     backgroundColor: Colors.red.withOpacity(
-                          //       0.3,
-                          //     ), // สีพื้นหลังของ Snackbar
-                          //     colorText: Colors.black,
-                          //   );
-                          //   return;
-                          // }
+                          // ทำให้ปุ่มแสดง "Loading"
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          // ใช้ Future.delayed เพื่อเพิ่มความล่าช้า
+                          await Future.delayed(Duration(milliseconds: 700));
 
                           // ถ้ามีการกรอกข้อมูลครบถ้วนแล้ว ทำการเพิ่ม Todo
-                          todoController.addTodo(
-                            titleController.text,
-                            subtitleController.text,
-                          );
+                          if (widget.todo != null) {
+                            widget.todo!.title = titleController.text;
+                            widget.todo!.subtitle = subtitleController.text;
+                            todoController.updateTodo(widget.todo!);
+                          } else {
+                            todoController.addTodo(
+                              titleController.text,
+                              subtitleController.text,
+                            );
+                          }
 
                           // กลับไปหน้าก่อนหน้า
                           Get.back();
@@ -134,8 +149,16 @@ class AddTodoView extends StatelessWidget {
                             ), // สีพื้นหลังของ Snackbar
                             colorText: Colors.black, // สีของข้อความใน Snackbar
                           );
+
+                          // กลับสถานะของปุ่มให้เป็นปกติ
+                          setState(() {
+                            isLoading = false;
+                          });
                         },
-                        child: Text('บันทึก'),
+                        child:
+                            isLoading
+                                ? CircularProgressIndicator(color: Colors.white)
+                                : Text('บันทึก'),
                       ),
                     ],
                   ),
